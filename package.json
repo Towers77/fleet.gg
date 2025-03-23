@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@d2api/manifest-web": "^3.2.1",
     "@tailwindcss/vite": "^4.0.15",
     "@tanstack/react-router": "^1.114.27",
     "@tanstack/react-start": "^1.114.27",
+    "bungie-api-ts": "^5.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.15",

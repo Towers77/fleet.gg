@@ -6,6 +6,7 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import css from '../index.css?url';
+import favicon from '../../destiny-icons/general/arrivals.svg?url';
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -26,6 +27,10 @@ export const Route = createRootRoute({
 				rel: 'stylesheet',
 				href: css,
 			},
+			{
+				rel: 'icon',
+				href: favicon,
+			},
 		],
 	}),
 	component: RootComponent,
@@ -45,7 +50,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950">
 				{children}
 				<Scripts />
 			</body>
