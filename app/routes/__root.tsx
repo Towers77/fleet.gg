@@ -31,6 +31,19 @@ export const Route = createRootRoute({
 				rel: 'icon',
 				href: favicon,
 			},
+			{
+				rel: 'preconnect',
+				href: 'https://fonts.googleapis.com',
+			},
+			{
+				rel: 'preconnect',
+				href: 'https://fonts.gstatic.com',
+				crossOrigin: 'anonymous',
+			},
+			{
+				rel: 'stylesheet',
+				href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
+			},
 		],
 	}),
 	component: RootComponent,
@@ -50,7 +63,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950">
+			<body className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white font-[Fira_Code]">
 				{children}
 				<Scripts />
 			</body>
