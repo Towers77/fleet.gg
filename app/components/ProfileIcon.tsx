@@ -7,6 +7,7 @@ export const ProfileIcon = ({ type }: ProfileIconProps) => {
 		case 1:
 			return (
 				<svg
+					className="w-10 h-10"
 					fill="#ffffff"
 					viewBox="0 0 32 32"
 					version="1.1"
@@ -27,6 +28,7 @@ export const ProfileIcon = ({ type }: ProfileIconProps) => {
 		case 2:
 			return (
 				<svg
+					className="w-10 h-10"
 					fill="#ffffff"
 					viewBox="0 0 32 32"
 					version="1.1"
@@ -71,6 +73,7 @@ export const ProfileIcon = ({ type }: ProfileIconProps) => {
 		case 5:
 			return (
 				<svg
+					className="w-10 h-10"
 					fill="#ffffff"
 					viewBox="0 0 32 32"
 					xmlns="http://www.w3.org/2000/svg"

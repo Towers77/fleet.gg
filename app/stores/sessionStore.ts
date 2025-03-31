@@ -1,3 +1,4 @@
+import { BungieMembershipType } from 'bungie-api-ts/destiny2';
 import { create } from 'zustand';
 
 type sessionStore = {
@@ -7,14 +8,14 @@ type sessionStore = {
 	profiles: Array<{
 		membership_id: string;
 		display_name: string;
-		type: number;
+		type: BungieMembershipType[];
 	}>;
 	setToken: (token: { access_token: string; expires_in: number }) => void;
 	setMembershipId: (id: string) => void;
 	addProfile: (profile: {
 		membership_id: string;
 		display_name: string;
-		type: number;
+		type: BungieMembershipType[];
 	}) => void;
 };
 

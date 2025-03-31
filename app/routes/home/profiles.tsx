@@ -59,7 +59,7 @@ function Profiles() {
 				session.addProfile({
 					membership_id: profile.membershipId,
 					display_name: profile.displayName,
-					type: profile.membershipType,
+					type: profile.applicableMembershipTypes,
 				});
 			});
 
@@ -86,7 +86,9 @@ function Profiles() {
 					params={{ membershipId: profile.membership_id }}
 					key={profile.membership_id}
 				>
-					<ProfileIcon type={profile.type} />
+					{profile.type.map((id) => (
+						<ProfileIcon key={id} type={id} />
+					))}
 					{profile.display_name}
 				</Link>
 			))}
