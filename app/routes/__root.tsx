@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 import css from '../index.css?url';
 import favicon from '../../destiny-icons/general/arrivals.svg?url';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -49,10 +50,14 @@ export const Route = createRootRoute({
 	component: RootComponent,
 });
 
+const queryClient = new QueryClient();
+
 function RootComponent() {
 	return (
 		<RootDocument>
-			<Outlet />
+			<QueryClientProvider client={queryClient}>
+				<Outlet />
+			</QueryClientProvider>
 		</RootDocument>
 	);
 }
@@ -63,8 +68,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white font-[Fira_Code]">
+			<body className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white font-[Fira_Code] h-screen">
 				{children}
+
 				<Scripts />
 			</body>
 		</html>
