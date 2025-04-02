@@ -3,26 +3,23 @@ import { useSessionStore } from '../stores/sessionStore';
 import { BASE_URL } from './consts';
 import { refreshTokenFn } from './authFuncs';
 
-let access_token = useSessionStore.getState().access_token;
-const session = useSessionStore.getState();
+let session = useSessionStore.getState();
 
 const auth = axios.create({
 	baseURL: BASE_URL,
 	headers: {
 		'X-API-Key': import.meta.env.VITE_API_KEY,
-		Authorization: 'Bearer ' + access_token,
+		Authorization: 'Bearer ' + session.access_token,
 	},
 });
 
 auth.interceptors.request.use(async (req) => {
-	if (!access_token) {
-		access_token = useSessionStore.getState().access_token;
-		req.headers.Authorization = 'Bearer ' + access_token;
+	session = useSessionStore.getState();
+	console.log(session.access_token);
+	if (session.access_token !== '') {
+		const isExpired = session.expires_in < Date.now() / 1000;
+		if (!isExpired) return req;
 	}
-
-	const expires_in = useSessionStore.getState().expires_in;
-	const isExpired = expires_in < Date.now() / 1000;
-	if (!isExpired) return req;
 
 	const res = await refreshTokenFn();
 
