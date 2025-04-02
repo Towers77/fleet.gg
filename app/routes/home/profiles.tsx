@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useSessionStore } from '../../stores/sessionStore';
 import { useQuery } from '@tanstack/react-query';
 import { getTokensFn } from '../../utils/authFuncs';
@@ -7,6 +7,7 @@ import { getLinkedProfiles } from 'bungie-api-ts/destiny2';
 import auth from '../../utils/axiosAuth';
 import { useServerFn } from '@tanstack/react-start';
 import { ProfileIcon } from '../../components/ProfileIcon';
+import { useEffect } from 'react';
 
 type HomeSearch = {
 	code: string;
@@ -23,6 +24,7 @@ function Profiles() {
 	const session = useSessionStore((state) => state);
 	const getTokens = useServerFn(getTokensFn);
 	const { code } = Route.useSearch();
+	const navigate = useNavigate({ from: '/home/profiles' });
 
 	const sessionQuery = useQuery({
 		queryKey: ['sessionData'],
@@ -59,7 +61,8 @@ function Profiles() {
 				session.addProfile({
 					membership_id: profile.membershipId,
 					display_name: profile.displayName,
-					type: profile.applicableMembershipTypes,
+					type: profile.membershipType,
+					linkedProfiles: profile.applicableMembershipTypes,
 				});
 			});
 
@@ -69,6 +72,20 @@ function Profiles() {
 		refetchOnWindowFocus: false,
 		refetchOnMount: false,
 	});
+
+	useEffect(() => {
+		const membershipType = window.localStorage.getItem(
+			'selected_membership_type'
+		);
+
+		const membershipId = window.localStorage.getItem('selected_membership_id');
+
+		if (membershipType && membershipId)
+			navigate({
+				to: `/home/$membershipId/inventory`,
+				params: { membershipId },
+			});
+	}, []);
 
 	if (profilesQuery.isPending) {
 		return <LoadingSpinner />;
@@ -85,9 +102,19 @@ function Profiles() {
 					to={`/home/$membershipId/inventory`}
 					params={{ membershipId: profile.membership_id }}
 					key={profile.membership_id}
+					onClick={() => {
+						window.localStorage.setItem(
+							'selected_membership_id',
+							profile.membership_id
+						);
+						window.localStorage.setItem(
+							'selected_membership_type',
+							profile.type.toString()
+						);
+					}}
 				>
-					{profile.type.map((id) => (
-						<ProfileIcon key={id} type={id} />
+					{profile.linkedProfiles.map((type) => (
+						<ProfileIcon key={type} type={type} />
 					))}
 					{profile.display_name}
 				</Link>

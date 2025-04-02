@@ -8,14 +8,16 @@ type sessionStore = {
 	profiles: Array<{
 		membership_id: string;
 		display_name: string;
-		type: BungieMembershipType[];
+		type: BungieMembershipType;
+		linkedProfiles: BungieMembershipType[];
 	}>;
 	setToken: (token: { access_token: string; expires_in: number }) => void;
 	setMembershipId: (id: string) => void;
 	addProfile: (profile: {
 		membership_id: string;
 		display_name: string;
-		type: BungieMembershipType[];
+		type: BungieMembershipType;
+		linkedProfiles: BungieMembershipType[];
 	}) => void;
 };
 
